@@ -1,0 +1,130 @@
+
+    <style type="text/css">
+      @charset 'UTF-8';
+      body{
+          margin:0;
+          padding:0;
+      }
+      a img{
+          border:none;
+      }
+
+      .logo_trabalho_pdf{
+        width: 100%;
+      }
+      .logo_pdf{
+          float: left;
+          width: 100%;
+      }
+
+      .logo_pdf img{
+        width: 235px;
+        height: 62px;
+        float: left;
+      }
+
+      .trab_ac_pdf{
+      float: right;
+      width: 100%;
+      }
+
+      .trab_ac_pdf, .trab_ac_pdf2{
+          text-align: right;
+          font-size: 12px;
+          font-family: 'Times New Roman';
+      }
+
+      .trab_ac_pdf2{
+          font-weight: bold;
+      }
+      .trabalho_pdf_titulo{
+          text-transform: uppercase;
+          text-align: center;
+          font-weight: bold;
+          font-size: 15px;
+          font-family: 'Times New Roman';
+      }
+      .trabalho_pdf{
+          text-align: center;
+          font-size: 15px;
+          font-family: 'Times New Roman';
+      }
+      .trabalho_pdf_resumo{
+          text-align: justify;
+          font-size: 15px;
+          font-family: 'Times New Roman';
+      }
+      .trabalho_pdf_rodape{
+          text-align: left;
+          margin-left: 30px;
+          font-size: 15px;
+          font-family: 'Times New Roman';
+      }
+    </style>
+
+        <input type="hidden" id="base_url" value="<?=base_url()?>" />
+
+        <script type="text/javascript">
+            window.base_url = $('#base_url').val();
+        </script>
+
+         <div class = "logo_trabalho_pdf">
+              <!--<div class="logo_pdf"><img src="../../../content/logo.png" /></div>  Caminho URL -->
+              <!-- <div class="logo_pdf"><img src="C://xampp/htdocs/mostra-ifrs-poa/content/logo.png" /></div> --> <!-- Caminho absoluto -->
+           
+              <div class="trab_ac_pdf"><span>Trabalho aceito para apresentação na 16ª Mostra de Pesquisa, Ensino e Extensão<br>
+              Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul<br>
+              Câmpus Porto Alegre<br>
+              28 e 29 setembro de 2015
+              </span></div>
+          </div>
+  <div class="trabalho_pdf">
+    <p class = "trab_ac_pdf">Trabalho número: <span class = "trab_ac_pdf2"><?php echo $trabalho->id_trabalho; ?></span></p>
+    <p>&nbsp; </p>
+  </div>
+        
+  <div class = "trabalho_pdf_titulo">
+    <p><?php echo $trabalho->titulo; ?></p>
+  </div>
+    <div class="trabalho_pdf">
+    <?php
+    foreach ($autores_do_trabalho as $autor_curso) {
+      echo $autor_curso->nome_usuario.", ";
+    }
+    ?>
+              
+    <?php
+    $quant_orientadores = 0;
+    foreach ($orientadores_do_trabalho as $orientador_campus) {
+      $quant_orientadores++;
+      echo $orientador_campus->nome_usuario.", ";
+      }//for
+    ?>
+            <br>
+            <br>
+    <?php
+    foreach ($autores_do_trabalho as $autor_curso) {
+      echo $autor_curso->email_trabalho.", ";
+    }
+    ?>
+            
+              
+    <?php
+    $quant_orientadores = 0;
+    foreach ($orientadores_do_trabalho as $orientador_campus) {
+      $quant_orientadores++;
+      echo $orientador_campus->email_trabalho.", ";
+      }//for
+    ?>
+
+
+    <p>Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul<br/>Câmpus: Porto Alegre</p>
+    </div>
+      <div class = "trabalho_pdf_resumo">
+        <p><?php echo $trabalho->resumo; ?></p>
+      </div>
+
+      <div class = "trabalho_pdf_rodape">
+        <p>Palavras-Chave: <?=$trabalho->palavra1.", ".$trabalho->palavra2.", ".$trabalho->palavra3; ?>
+        <br><br>Apoiadores: <?=$trabalho->apoiadores; ?></p>
+      </div>

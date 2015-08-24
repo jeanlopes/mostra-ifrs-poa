@@ -1,0 +1,40 @@
+/* global $ */
+
+$(document).ready(function () {
+
+    'use strict';
+
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    };
+   
+    $('.already').click(function () {
+        window.alert('Você já está cadastrado neste papel');
+    });
+    
+        var papel_corrente = $('input[name=papel_corrente]').val();
+    if (papel_corrente) {
+        papel_corrente = papel_corrente.capitalizeFirstLetter();
+
+        var elemento_papel = $('a:contains('+ papel_corrente +')');
+        elemento_papel.html( '<strong>' + elemento_papel.html() + '</strong>');
+    }
+
+    $('.confirm_orientador').click(function () {
+
+        var text = 'ATENÇÃO: apenas professores e técnicos adminstrativos podem se inscrever como ORIENTADOR. Você tem certeza que deseja se inscrever nesse papel?';
+        var link = window.base_url + 'usuario/orientador_ctr/inscricao_incremental';
+
+        //if (rest) {
+        //  return true;
+        //}
+        //else {
+        //  return false;
+        //}
+        var resp = window.confirm(text);
+        if (resp) {
+            window.location.href = link;
+        }
+
+    });
+});

@@ -1,0 +1,77 @@
+/* globals $, alert  */
+
+$(document).ready(function () {
+   
+   'use strict';
+
+   // máscara do cpf
+   $('input[name=cpf]').mask('999.999.999-99');
+   
+   // focus
+   $('.modal').on('shown.bs.modal', function() {
+        setTimeout(function(){
+            $('input[name=cpf]').focus();
+        }, 300);
+   });
+   
+   // enter key
+   
+    $('input').keyup(function (e) {
+      
+        if (e.which === 13) {
+            $(this).parents('.modal').find('button.btn-primary').trigger('click');
+            
+        }
+    });
+    
+    $('form').submit(function(e) {
+      
+        if ($(this).attr('action') === undefined) 
+            e.preventDefault();
+    });
+
+   
+   //Executado quando clica em um dos itens de menu Inscricao.
+   // Guarda a URL de destino da verificação de CPF
+   $('ul.dropdown-menu li a').click(function() {
+       localStorage.setItem('url_insc', $(this).attr('data')); 
+   });
+   
+    // AJAX do modal verificar CPF
+    //Executado quando clicar no botão "Verificar CPF".
+    $('#modalCPF').find('button[form=CPFForm]').click(function () {
+        
+        var cpf = $('#modalCPF').find('input[name=cpf]').val();
+        cpf = cpf.replace('.','').replace('.','').replace('-', '');
+        var papel = localStorage.getItem('url_insc');
+        
+        //Exemlo http://localhost/mostra-ifrs-poa/usuario/autor_ctr/inscricao/12345678900
+        //var base_url = 'http://localhost/mostra-ifrs-poa/';
+        
+        //var redirect = base_url + 'usuario' + '/' + papel + '_ctr/inscricao/' + cpf;
+        var redirect = '../usuario' + '/' + papel + '_ctr/inscricao/' + cpf;
+        
+        //Chama por ajax
+        //$.get(base_url+'home/home_ctr/verificar_cpf/'+cpf, function (data) {
+        
+        $.get(window.location.pathname + '/verificar_cpf/'+cpf, function (data) {
+           
+            if (data === 'invalid') {
+                alert('cpf inválido!');
+                return;
+            }
+            var result = JSON.parse(data);
+            //????
+            if (result)
+            {//Usuario existe. Pede o CPF.
+                $('#modalCPF').modal('toggle'); //fecha modalCPF
+                $('#modalLogin').modal('toggle'); //abre modalLogin
+                $('#modalLogin').find('input[name=cpf]').val(cpf);
+                $('#modalLogin').find('input[name=redirect]').val(redirect);
+            }
+            else
+                window.location.href = redirect;
+           
+        });
+    });
+});
