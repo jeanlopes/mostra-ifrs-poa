@@ -2,6 +2,8 @@
 
 //só para testar comit.
 
+//teste alex
+
 //Alex <<<<<<< 
 require_once "config/constants.php";
 require_once "procedural/model/sql/ConnectionProperty.class.php";
